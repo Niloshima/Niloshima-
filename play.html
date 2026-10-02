@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Game - MineZone Arcade</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-link">⬅ Back to Arcade</a>
+        <h2 id="gameTitle">Loading Game...</h2>
+    </header>
+
+    <div class="player-wrapper">
+        <!-- Game Screen Area -->
+        <div class="game-screen-container">
+            <iframe id="gameIframe" class="game-iframe" allow="autoplay; fullscreen; pointer-lock" allowfullscreen></iframe>
+            <div class="controls-bar">
+                <span id="gameCategory" class="badge">SANDBOX</span>
+                <button id="fullscreenBtn" onclick="toggleFullscreen()">fullscreen ⛶</button>
+            </div>
+        </div>
+
+        <!-- Sidebar / Details & Ads -->
+        <aside class="player-sidebar">
+            <div class="ad-container sidebar-ad">
+                <span class="ad-label">SPONSORED AD</span>
+                <div class="ad-placeholder">
+                    <p>300 x 250 Sidebar Banner Ad</p>
+                </div>
+            </div>
+
+            <div class="game-details">
+                <h3 id="detailsTitle">Game Title</h3>
+                <p id="detailsDesc">Game description will appear here.</p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Bottom Ad Banner -->
+    <div class="ad-container bottom-ad">
+        <span class="ad-label">SPONSORED ADVERTISEMENT</span>
+        <div class="ad-placeholder">
+            <p>728 x 90 Banner Ad Area</p>
+        </div>
+    </div>
+
+    <script src="js/games.js"></script>
+    <script>
+        // Get game ID from URL query string
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameId = parseInt(urlParams.get('id')) || 1;
+
+        const currentGame = gamesList.find(g => g.id === gameId) || gamesList[0];
+
+        // Update DOM elements
+        document.title = `Play ${currentGame.title} - MineZone Arcade`;
+        document.getElementById('gameTitle').innerText = currentGame.title;
+        document.getElementById('detailsTitle').innerText = currentGame.title;
+        document.getElementById('detailsDesc').innerText = currentGame.description;
+        document.getElementById('gameCategory').innerText = currentGame.category.toUpperCase();
+        document.getElementById('gameIframe').src = currentGame.embed_url;
+
+        function toggleFullscreen() {
+            const iframe = document.getElementById('gameIframe');
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.webkitRequestFullscreen) {
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) {
+                iframe.msRequestFullscreen();
+            }
+        }
+    </script>
+</body>
+</html>
